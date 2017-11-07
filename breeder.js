@@ -5,17 +5,17 @@ var roleBuilder = require('role.builder');
 module.exports = {
     roles: [{
             name: 'harvester',
-            desired: 4,
+            desired: 3,
             ids: [],
             config: roleHarvester
         },{
             name: 'upgrader',
-            desired: 2,
+            desired: 4,
             ids: [],
             config: roleUpgrader
         },{
             name: 'builder',
-            desired: 3,
+            desired: 1,
             ids: [],
             config: roleBuilder
         }

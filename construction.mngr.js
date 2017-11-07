@@ -28,5 +28,15 @@ module.exports = {
 		if (ctrl) {
 		    this.buildRoads(spawn.pos, ctrl.pos, room, spawn);
 		}
+	},
+
+	buildStores: function (room) {
+		if (!room) {
+			room = Game.spawns.Spawn1.room;
+		}
+
+		var storeTargets = [room.spawn, room.controller];
+
+
 	}
 };

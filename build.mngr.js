@@ -1,10 +1,12 @@
+var creepUtils = require('creep.utils');
 const spawnRoom = Game.spawns.Spawn1.room;
 
 module.exports = {
     roomConstructions: spawnRoom.find(FIND_CONSTRUCTION_SITES),
-    builders: spawnRoom.find(FIND_MY_CREEPS, {filter: (object) => object.memory.role == 'builder'}),
+    builders: creepUtils.findAllCreepsOfRoleInRoom('builder', spawnRoom),
     reprogram: function () {
-        this.builders = spawnRoom.find(FIND_MY_CREEPS, {filter: (object) => object.memory.role == 'builder'});
+        this.builders = creepUtils.findAllCreepsOfRoleInRoom('builder', spawnRoom);
+
         this.roomConstructions = spawnRoom.find(FIND_CONSTRUCTION_SITES);
 
         let creepsPerSite = 2;
@@ -25,8 +27,8 @@ module.exports = {
         });
     },
     run: function () {
-        // if (Game.time % 5 === 2) {
+        if (Game.time % 5 === 2) {
             this.reprogram();
-        // }
+        }
     }
 };

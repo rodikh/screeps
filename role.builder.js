@@ -1,4 +1,4 @@
-var roleUtils = require('role.utils');
+var creepUtils = require('creep.utils');
 var roleBuilder = {
     baseBody: [WORK, MOVE, CARRY, CARRY],
     baseMemory:  {role: 'builder'},
@@ -16,7 +16,7 @@ var roleBuilder = {
 	    if(creep.memory.building) {
             this.moveToAndBuild(creep, creep.memory.targetConstructionId);
 	    } else {
-	        this.moveToAndHarvestEnergy(creep, creep.memory.targetSourceId);
+	        creepUtils.moveToAndGetEnergy(creep, creep.memory.targetSourceId);
 	    }
 	},
 	moveToAndBuild: function(creep, siteId, site) {
@@ -31,16 +31,6 @@ var roleBuilder = {
                 creep.moveTo(site);
             }
 	    }
-	},
-	moveToAndHarvestEnergy: function(creep, sourceId, source) {
-	    if (sourceId) {
-            source = Game.getObjectById(sourceId);
-	    }
-        if (source) {
-	        if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(source);
-            }        
-        }
 	}
 };
 

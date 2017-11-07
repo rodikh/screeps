@@ -8,31 +8,28 @@
  */
 
 const spawnRoom = Game.spawns.Spawn1.room;
+var creepsPerSource = 2;
+var creepUtils = require('creep.utils');
 
 module.exports = {
     roomSources: spawnRoom.find(FIND_SOURCES),
-    harvesters: spawnRoom.find(FIND_MY_CREEPS, {filter: (object) => object.memory.role == 'harvester'}),
+    harvesters: creepUtils.findAllCreepsOfRoleInRoom('harvester', spawnRoom),
     reprogram: function () {
-        this.harvesters = spawnRoom.find(FIND_MY_CREEPS, {filter: (object) => object.memory.role == 'harvester'});
+        this.harvesters = creepUtils.findAllCreepsOfRoleInRoom('harvester', spawnRoom);
         
         this.roomSources = spawnRoom.find(FIND_SOURCES);
         if (this.roomSources.length) {
             creepsPerSource = Math.ceil(this.harvesters.length / this.roomSources.length);
         }
-        
-        // this.roomSources = [Game.spawns.Spawn1.pos.findClosestByRange(FIND_SOURCES)];
-        // var creepsPerSource = 3;
-        
+
         this.roomSources.forEach((source, index)=>{
             var sourceHarvesters = this.harvesters.slice(creepsPerSource*index, creepsPerSource*index+creepsPerSource);
             sourceHarvesters.forEach((harvester)=>{
                 if (harvester.memory.targetSourceId !== source.id) {
                     harvester.memory.targetSourceId = source.id;
-                    harvester.memory.targetStoreId = null;
                     harvester.say('new src');
                 }
             });
-            // console.log('redirected ' + sourceHarvesters.length+ ' out of ' + this.harvesters.length, 'harvs to', source, creepsPerSource*index, creepsPerSource*index+creepsPerSource, this.harvesters)
         });
         
     },

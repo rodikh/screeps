@@ -1,3 +1,6 @@
+// TODO:
+// build stores
+// algorithm for figuring out where to build stores
 
 var breeder = require('breeder');
 var roleHarvester = require('role.harvester');
